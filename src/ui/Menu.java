@@ -1,26 +1,37 @@
 package ui;
-import java.util.Scanner;
-import java.io.IOException;
+import java.util.*;
 import model.*;
 
 public class Menu{
 
-  private final static int MAX_USERS = 10;
   private final static int REGISTER_USER = 1;
   private final static int LOGIN_USER = 2;
   private final static int EXIT = 3;
-  private User[] users = new User[MAX_USERS];
+  private final static int ADD_SONG = 1;
+  private Genre[] allGenres = Genre.values();
+  private MCS app = new MCS();
 
   private static Scanner sc = new Scanner(System.in);
 
   public void startProgram(){
-    int choice;
+    int choice = 0;
+    firstPartProgram(choice, allGenres);
+  }
 
+  public void firstPartProgram(int choice, Genre[] allGenres){
     do {
       showFirstUser();
       choice = readOption(sc);
-      doOpUser(choice);
+      doFirstOp(choice, allGenres);
     } while (choice != 3);
+  }
+
+  public void secondPartProgram(int choice, Genre[] allGenres){
+    do {
+      showSecondUser();
+      choice = readOption(sc);
+      doSecondOp(choice, allGenres);
+    } while (choice != 2);
   }
 
   public void showFirstUser(){
@@ -29,13 +40,18 @@ public class Menu{
     System.out.println("(3) Para cerrar el programa.\n");
   }
 
-  public void doOpUser(int choice){
+  public void showSecondUser(){
+    System.out.println("\n(1) Añadir una cancion.");
+    System.out.println("(2) Log out.\n");
+  }
+
+  public void doFirstOp(int choice, Genre[] allGenres){
     switch (choice){
       case REGISTER_USER:
-        registerUser(sc);
+        registerInfoUser(sc);
         break;
       case LOGIN_USER:
-        loginUser(sc);
+        loginUser(sc, choice, allGenres);
         break;
       case EXIT:
         break;
@@ -44,37 +60,67 @@ public class Menu{
     }
   }
 
-  public void registerUser(Scanner sc){
-    System.out.println("\nIngrese su nombre de usuario (Sin espacios).");
-    String userName = sc.nextLine();
-    System.out.println("\nIngrese su contraseña.");
-    String userPassword = sc.nextLine();
-    System.out.println("\nIngrese su edad.");
-    int userAge = sc.nextInt();
-    boolean added = false;
-    for (int i = 0; i < MAX_USERS && !added; i++){
-      if (users[i] == null){
-        users[i] = new User(userName, userPassword, userAge);
-        added = true;
-      }
+  public void doSecondOp(int choice, Genre[] allGenres){
+    switch (choice){
+      case ADD_SONG:
+        addInfoSong(sc, allGenres);
+        break;
+      default:
+        System.out.println("\nOpcion invalida, repita nuevamente.");
     }
-    if (added){
-      System.out.println("\nSe registro correctamente.");
-    } else {
-      System.out.println("\nNo se registro correctamente.");
-    }
-  }
-
-  public void loginUser(){
-    System.out.println("Ingrese su nombre de usuario.");
-    String userName = sc.nextLine();
-    System.out.println("Ingrese su contraseña.");
-    String userPassword = sc.nextLine();
   }
 
   public int readOption(Scanner sc){
     int choice = sc.nextInt();
     sc.nextLine();
     return choice;
+  }
+
+  public void registerInfoUser(Scanner sc){
+    System.out.println("\nIngrese su nombre de usuario (Sin espacios):");
+    String userName = sc.nextLine();
+    System.out.println("\nIngrese su contraseña:");
+    String userPassword = sc.nextLine();
+    System.out.println("\nIngrese su edad:");
+    int userAge = sc.nextInt();
+    boolean register = app.registerUser(userName, userPassword, userAge);
+    if (register){
+      System.out.println("\nEl usuario Se registro correctamente.");
+    } else {
+      System.out.println("\nEl usuario No se registro correctamente.");
+    }
+  }
+
+  public void loginUser(Scanner sc, int choice, Genre[] allGenres){
+    System.out.println("\nIngrese su nombre de usuario.");
+    String userName = sc.nextLine();
+    System.out.println("\nIngrese su contraseña.");
+    String userPassword = sc.nextLine();
+    User[] users = app.getUsers();
+    boolean userRegistered = app.isUserRegistered(userName, userPassword, users);
+    if (userRegistered){
+      System.out.println("\nInicio sesion correctamente.");
+      secondPartProgram(choice, allGenres);
+    } else {
+      System.out.println("\nNo pudo iniciar sesion correctamente.");
+    }
+  }
+
+  public void addInfoSong(Scanner sc, Genre[] allGenres){
+    System.out.println("\nIngrese el nombre de la cancion:");
+    String songTitle = sc.nextLine();
+    System.out.println("\nIngrese el artista de la cancion:");
+    String songArtist = sc.nextLine();
+    System.out.println("\nIngrese la duracion de la cancion en segundos:");
+    int songDuration = sc.nextInt();
+    Song.printAllGenre(allGenres);
+    int genreChoice = sc.nextInt();
+    genreChoice--;
+    boolean added = app.addSong(songTitle, songArtist, songDuration, genreChoice);
+    if (added){
+      System.out.println("\nLa cancion Se añadio correctamente.");
+    } else {
+      System.out.println("\nLa cancion No se añadio correctamente.");
+    }
   }
 }

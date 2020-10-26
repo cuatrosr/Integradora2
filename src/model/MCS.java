@@ -38,8 +38,10 @@ public class MCS{
   }
 
   public boolean addSong(String songTitle, String songArtist, int songDuration, int genreChoice){
-    boolean added = false;
-    
-    return added;
+    return songs.add(new Song(songTitle, songArtist, songDuration, genreChoice));
+  }
+
+  public ArrayList<Song> getSongs(){
+    return songs;
   }
 }

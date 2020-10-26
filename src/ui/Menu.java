@@ -8,6 +8,7 @@ public class Menu{
   private final static int LOGIN_USER = 2;
   private final static int EXIT = 3;
   private final static int ADD_SONG = 1;
+  private final static int SHOW_SONG = 2;
   private Genre[] allGenres = Genre.values();
   private MCS app = new MCS();
 
@@ -31,7 +32,7 @@ public class Menu{
       showSecondUser();
       choice = readOption(sc);
       doSecondOp(choice, allGenres);
-    } while (choice != 2);
+    } while (choice != 3);
   }
 
   public void showFirstUser(){
@@ -42,7 +43,8 @@ public class Menu{
 
   public void showSecondUser(){
     System.out.println("\n(1) Añadir una cancion.");
-    System.out.println("(2) Log out.\n");
+    System.out.println("(2) Mostrar las canciones agregadas.");
+    System.out.println("(3) Log out.\n");
   }
 
   public void doFirstOp(int choice, Genre[] allGenres){
@@ -64,6 +66,9 @@ public class Menu{
     switch (choice){
       case ADD_SONG:
         addInfoSong(sc, allGenres);
+        break;
+      case SHOW_SONG:
+        showSongs();
         break;
       default:
         System.out.println("\nOpcion invalida, repita nuevamente.");
@@ -121,6 +126,24 @@ public class Menu{
       System.out.println("\nLa cancion Se añadio correctamente.");
     } else {
       System.out.println("\nLa cancion No se añadio correctamente.");
+    }
+  }
+
+  public void showSongs(){
+    ArrayList<Song> songs = app.getSongs();
+    if (songs.isEmpty()){
+      System.out.println("\nNo hay canciones todavia.");
+    } else {
+      System.out.println("\nEstas son las canciones que estan registradas.\n");
+      for (int i = 0; i < songs.size(); i++){
+        System.out.println("**************  Song **************");
+        System.out.println("**  Title: " + songs.get(i).getSongTitle());
+        System.out.println("**  Artist: " + songs.get(i).getSongArtist());
+        int songDuration = songs.get(i).getSongDuration();
+        System.out.println("**  Duration: " + Song.convertSongDuration(songDuration));
+        System.out.println("**  Genre: " + songs.get(i).getGenre());
+        System.out.println("***********************************\n");
+      }
     }
   }
 }

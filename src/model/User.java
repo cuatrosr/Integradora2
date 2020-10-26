@@ -37,4 +37,8 @@ public class User{
   public int getUserAge(){
     return userAge;
   }
+
+  public Category getUserCategory(){
+    return userCategory;
+  }
 }

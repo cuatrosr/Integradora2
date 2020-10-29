@@ -185,16 +185,20 @@ public class Menu{
 
   public void showPoolSongs(){
     Song[] pool = app.getPoolSongs();
-    System.out.println("\nEstas son las canciones que estan en el pool.\n");
-    for (int i = 0; i < pool.length; i++){
-      if (pool[i] != null){
-        System.out.println("**************  Song **************");
-        System.out.println("**  Title: " + pool[i].getSongTitle());
-        System.out.println("**  Artist: " + pool[i].getSongArtist());
-        int songDuration = pool[i].getSongDuration();
-        System.out.println("**  Duration: " + Song.convertSongDuration(songDuration));
-        System.out.println("**  Genre: " + pool[i].getGenre());
-        System.out.println("***********************************\n");
+    if (pool[0] == null) {
+      System.out.println("\nNo hay canciones en el pool.");
+    } else {
+      System.out.println("\nHay " + app.getTotalSongsPool() + " canciones en el pool.");
+      for (int i = 0; i < pool.length; i++){
+        if (pool[i] != null){
+          System.out.println("\n**************  Song **************");
+          System.out.println("**  Title: " + pool[i].getSongTitle());
+          System.out.println("**  Artist: " + pool[i].getSongArtist());
+          int songDuration = pool[i].getSongDuration();
+          System.out.println("**  Duration: " + Song.convertSongDuration(songDuration));
+          System.out.println("**  Genre: " + pool[i].getGenre());
+          System.out.println("***********************************\n");
+        }
       }
     }
   }
@@ -202,9 +206,10 @@ public class Menu{
   public void showTotalUsers(){
     User[] users = app.getUsers();
     if (users[0] != null){
+      System.out.println("\nHay " + app.getTotalUsers() + " usuarios registrados.\n");
       for (int i = 0; i < users.length; i++){
         if (users[i] != null){
-          System.out.println("\n*************  User **************");
+          System.out.println("*************  User **************");
           System.out.println("**  UserName: " + users[i].getUserName());
           System.out.println("**  Age: " + users[i].getUserAge());
           System.out.println("**  Category: " + users[i].getUserCategory());
@@ -221,7 +226,7 @@ public class Menu{
     if (songs.isEmpty()){
       System.out.println("\nNo hay canciones todavia.");
     } else {
-      System.out.println("\nEstas son las canciones que estan registradas.\n");
+      System.out.println("\nHay " + songs.size() + " canciones registradas.\n");
       for (int i = 0; i < songs.size(); i++){
         System.out.println("**************  Song **************");
         System.out.println("**  Title: " + songs.get(i).getSongTitle());

@@ -63,4 +63,12 @@ public class MCS{
   public ArrayList<Song> getSongs(){
     return songs;
   }
+
+  public int getTotalUsers(){
+    return totalUsers;
+  }
+
+  public int getTotalSongsPool(){
+    return totalSongsPool;
+  }
 }

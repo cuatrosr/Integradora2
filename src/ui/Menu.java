@@ -32,11 +32,11 @@ public class Menu{
     } while (choice != 4);
   }
 
-  public void secondPartProgram(int choice, Genre[] allGenres){
+  public void secondPartProgram(int choice, Genre[] allGenres, int activeUser){
     do {
       showSecondUser();
       choice = readOption(sc);
-      doSecondOp(choice, allGenres);
+      doSecondOp(choice, allGenres, activeUser);
     } while (choice != 3);
   }
 
@@ -85,10 +85,10 @@ public class Menu{
     }
   }
 
-  public void doSecondOp(int choice, Genre[] allGenres){
+  public void doSecondOp(int choice, Genre[] allGenres, int activeUser){
     switch (choice){
       case ADD_SONG:
-        addInfoSong(sc, allGenres);
+        addInfoSong(sc, allGenres, activeUser);
         break;
       case SHOW_POOL_SONG:
         showPoolSongs();
@@ -145,13 +145,14 @@ public class Menu{
     boolean userRegistered = app.isUserRegistered(userName, userPassword, users);
     if (userRegistered){
       System.out.println("\nInicio sesion correctamente.");
-      secondPartProgram(choice, allGenres);
+      int activeUser = app.isActiveUser(userName, users);
+      secondPartProgram(choice, allGenres, activeUser);
     } else {
       System.out.println("\nNo pudo iniciar sesion correctamente.");
     }
   }
 
-  public void addInfoSong(Scanner sc, Genre[] allGenres){
+  public void addInfoSong(Scanner sc, Genre[] allGenres, int activeUser){
     System.out.println("\nIngrese el nombre de la cancion:");
     String songTitle = sc.nextLine();
     System.out.println("\nIngrese el artista de la cancion:");
@@ -171,7 +172,8 @@ public class Menu{
       choice = readOption(sc);
       switch (choice){
         case 1:
-          share = app.shareSong(songTitle, songArtist, songDuration, genreChoice);
+          share = app.shareSong(songTitle, songArtist, songDuration, genreChoice, activeUser);
+          app.updateCategory(activeUser);
           break;
         case 2:
           break;

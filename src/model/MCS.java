@@ -36,20 +36,58 @@ public class MCS{
     return registered;
   }
 
+  public int isActiveUser(String userName, User[] users){
+    int active = 0;
+    boolean found = false;
+    try {
+      for (int i = 0; i < users.length; i++){
+        if (users[i].getUserName().equals(userName) && !found){
+          active = i;
+          found = true;
+        }
+      }
+    } catch (NullPointerException e){
+    }
+    return active;
+  }
+
   public boolean addSong(String songTitle, String songArtist, int songDuration, int genreChoice){
     return songs.add(new Song(songTitle, songArtist, songDuration, genreChoice));
   }
 
-  public boolean shareSong(String songTitle, String songArtist, int songDuration, int genreChoice){
+  public boolean shareSong(String songTitle, String songArtist, int songDuration, int genreChoice, int activeUser){
     boolean added = false;
     for (int i = 0; i < MAX_SONGS_POOL && !added; i++){
       if (pool[i] == null){
         pool[i] = new Song(songTitle, songArtist, songDuration, genreChoice);
         added = true;
+        int shareSong = users[activeUser].getShareSong();
+        shareSong++;
+        users[activeUser].setShareSong(shareSong);
+        updateCategory(activeUser);
         totalSongsPool++;
       }
     }
     return added;
+  }
+
+  public void updateCategory(int activeUser){
+    Category userCategory;
+    switch (users[activeUser].getShareSong()){
+      case 3:
+        userCategory = Category.LITTLECONTRIBUTOR;
+        users[activeUser].setUserCategory(userCategory);
+        break;
+      case 10:
+        userCategory = Category.MILDCONTRIBUTOR;
+        users[activeUser].setUserCategory(userCategory);
+        break;
+      case 30:
+        userCategory = Category.STARCONTRIBUTOR;
+        users[activeUser].setUserCategory(userCategory);
+        break;
+      default:
+    }
   }
 
   public User[] getUsers(){

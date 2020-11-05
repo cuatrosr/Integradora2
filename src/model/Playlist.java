@@ -12,7 +12,11 @@ public abstract class Playlist{
     playlistGenre = genres;
   }
 
-  public int getPlayListDuration(){
+  public String getPlaylistTitle(){
+    return playlistTitle;
+  }
+
+  public int getPlaylistDuration(){
     return playlistDuration;
   }
 
@@ -20,10 +24,11 @@ public abstract class Playlist{
     return playlistGenre;
   }
 
-  public void showPlaylist(){
-    System.out.println("**************  Playlist **************");
-    System.out.println("**  Title: Musica para programar");
-    System.out.println("**  Duration: 11:48");
-    System.out.println("**  Genre: ROCK, HIPHOP");
+  public String showPlaylist(){
+    String msg = "\n**************  Playlist **************";
+    msg += "\n**  Title: " + getPlaylistTitle();
+    msg += "\n**  Duration: " + getPlaylistDuration();
+    msg += "\n**  Genre: " + getPlaylistGenre();
+    return msg;
   }
 }

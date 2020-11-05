@@ -5,12 +5,14 @@ public class User{
   private String userName;
   private String userPassword;
   private int userAge;
+  private int shareSong;
   private Category userCategory;
 
   public User(String userName, String userPassword, int userAge){
     this.userName = userName;
     this.userPassword = userPassword;
     this.userAge = userAge;
+    shareSong = 0;
     userCategory = Category.NEWBIE;
   }
 
@@ -38,7 +40,19 @@ public class User{
     return userAge;
   }
 
+  public int getShareSong(){
+    return shareSong;
+  }
+
+  public void setShareSong(int shareSong){
+    this.shareSong = shareSong;
+  }
+
   public Category getUserCategory(){
     return userCategory;
+  }
+
+  public void setUserCategory(Category userCategory){
+    this.userCategory = userCategory;
   }
 }

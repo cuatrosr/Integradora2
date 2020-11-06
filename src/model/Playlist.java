@@ -23,12 +23,4 @@ public abstract class Playlist{
   public Genre getPlayListGenre(){
     return playlistGenre;
   }
-
-  public String showPlaylist(){
-    String msg = "\n**************  Playlist **************";
-    msg += "\n**  Title: " + getPlaylistTitle();
-    msg += "\n**  Duration: " + getPlaylistDuration();
-    msg += "\n**  Genre: " + getPlaylistGenre();
-    return msg;
-  }
 }

@@ -5,8 +5,10 @@ public class MCS{
 
   private final static int MAX_USERS = 10;
   private final static int MAX_SONGS_POOL = 30;
+  private final static int MAX_PLAYLISTS = 20;
   private User[] users = new User[MAX_USERS];
   private Song[] pool = new Song[MAX_SONGS_POOL];
+  private Playlist[] playlists = new Playlist[MAX_PLAYLISTS];
   private ArrayList<Song> songs = new ArrayList<Song>();
   private int totalUsers = 0;
   private int totalSongsPool = 0;
@@ -108,5 +110,9 @@ public class MCS{
 
   public int getTotalSongsPool(){
     return totalSongsPool;
+  }
+
+  public Playlist[] getPlaylists(){
+    return playlists;
   }
 }

@@ -1,4 +1,4 @@
-import model;
+package model;
 
 public class PrivatePlaylist extends Playlist{
 
@@ -15,5 +15,11 @@ public class PrivatePlaylist extends Playlist{
 
   public void setPrivateAdmin(User privateAdmin){
     this.privateAdmin = privateAdmin;
+  }
+
+  @Override
+  public double convertPunctuation(){
+    double nada = 0;
+    return nada;
   }
 }

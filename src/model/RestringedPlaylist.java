@@ -1,13 +1,13 @@
-import model;
+package model;
 
 public class RestringedPlaylist extends Playlist{
 
-  private User[] restringedAdmins;
-  private final static int MAX_RESTRINGED_ADMINS;
+  private User[] restringedAdmins = new User[MAX_RESTRINGED_ADMINS];
+  private final static int MAX_RESTRINGED_ADMINS = 5;
 
-  public RestringedPlaylist(String playlistTitle, int songDuration, Genre genres){
+  public RestringedPlaylist(String playlistTitle, int songDuration, Genre genres, User[] adminsRestringed){
     super(playlistTitle, songDuration, genres);
-    restringedAdmins = new User[MAX_RESTRINGED_ADMINS];
+    this.restringedAdmins = adminsRestringed;
   }
 
   public User[] getRestringedAdmins(){
@@ -16,5 +16,11 @@ public class RestringedPlaylist extends Playlist{
 
   public void setRestringedAdmins(User[] restringedAdmins){
     this.restringedAdmins = restringedAdmins;
+  }
+
+  @Override
+  public double convertPunctuation(){
+    double nada = 0;
+    return nada;
   }
 }

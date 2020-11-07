@@ -10,10 +10,15 @@ public class Menu{
   private final static int EXIT_PROGRAM = 4;
   private final static int ADD_SONG = 1;
   private final static int SHOW_POOL_SONG = 2;
-  private final static int EXIT_USER = 3;
+  private final static int ADMIN_PLAYLIST = 3;
+  private final static int EXIT_USER = 4;
   private final static int SHOW_USERS = 1;
   private final static int SHOW_SONG = 2;
   private final static int EXIT_ADMIN = 3;
+  private final static int ADD_PLAYLIST = 1;
+  private final static int PLAYLIST_PUNCTUATION = 2;
+  private final static int SHOW_PLAY_PUNCTUATION = 3;
+  private final static int EXIT_PLAYLIST = 4;
   private Genre[] allGenres = Genre.values();
   private MCS app = new MCS();
 
@@ -37,15 +42,23 @@ public class Menu{
       showSecondUser();
       choice = readOption(sc);
       doSecondOp(choice, allGenres, activeUser);
-    } while (choice != 3);
+    } while (choice != 4);
   }
 
   public void adminPartProgram(int choice){
-    do {
+    do{
       showAdmin();
       choice = readOption(sc);
       doAdminOp(choice);
     } while (choice != 3);
+  }
+
+  public void playlistProgram(int choice, int activeUser){
+    do{
+      showPlaylist();
+      choice = readOption(sc);
+      doPlaylistOp(choice);
+    } while(choice != 4);
   }
 
   public void showFirstUser(){
@@ -58,13 +71,21 @@ public class Menu{
   public void showSecondUser(){
     System.out.println("\n(1) Añadir una cancion.");
     System.out.println("(2) Mostrar las canciones agregadas.");
-    System.out.println("(3) Log out.\n");
+    System.out.println("(3) Administrar Playlist.");
+    System.out.println("(4) Log out.\n");
   }
 
   public void showAdmin(){
     System.out.println("\n(1) Mostrar todos los usuarios registrados.");
     System.out.println("(2) Mostrar todas las canciones registradas.");
     System.out.println("(3) Salir.\n");
+  }
+
+  public void showPlaylist(){
+    System.out.println("\n(1) Añadir una playlist.");
+    System.out.println("(2) Puntuar una playlist.");
+    System.out.println("(3) Ver puntuaciones de una playlist.");
+    System.out.println("(4) Salir\n");
   }
 
   public void doFirstOp(int choice, Genre[] allGenres){
@@ -93,6 +114,9 @@ public class Menu{
       case SHOW_POOL_SONG:
         showPoolSongs();
         break;
+      case ADMIN_PLAYLIST:
+        playlistProgram(choice, activeUser);
+        break;
       case EXIT_USER:
         break;
       default:
@@ -113,6 +137,21 @@ public class Menu{
       default:
         System.out.println("\nOpcion invalida, repita nuevamente.");
       }
+  }
+
+  public void doPlaylistOp(int choice){
+    switch (choice){
+      case ADD_PLAYLIST:
+        break;
+      case PLAYLIST_PUNCTUATION:
+        break;
+      case SHOW_PLAY_PUNCTUATION:
+        break;
+      case EXIT_PLAYLIST:
+        break;
+      default:
+        System.out.println("\nOpcion invalida, repita nuevamente.");
+    }
   }
 
   public int readOption(Scanner sc){

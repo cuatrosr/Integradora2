@@ -115,4 +115,96 @@ public class MCS{
   public Playlist[] getPlaylists(){
     return playlists;
   }
+
+  public boolean topPlaylist(){
+    boolean full = false;
+    int count = 0;
+    for (int i = 0; i < MAX_PLAYLISTS; i++){
+      if (playlists[i] != null){
+        count++;
+      }
+    }
+    if (count == MAX_PLAYLISTS){
+      full = true;
+    }
+    return full;
+  }
+
+  public String addPlaylist(String playlistTitle, int songDuration, Genre genres, User privateAdmin){
+    boolean added = false;
+    String msg = "";
+    boolean full = topPlaylist();
+    if (full){
+      msg = "\nNo se pueden agregar mas playlist.";
+    } else {
+      for (int i = 0; i < MAX_PLAYLISTS && !added; i++){
+        if (playlists[i] == null){
+          playlists[i] = new PrivatePlaylist(playlistTitle, songDuration, genres, privateAdmin);
+          added = true;
+          msg = "\nLa playlist se agrego exitosamente.";
+        }
+      }
+    }
+    return msg;
+  }
+
+  public String addPlaylist(String playlistTitle, int songDuration, Genre genres, User[] adminsRestringed){
+    boolean added = false;
+    String msg = "";
+    boolean full = topPlaylist();
+    if (full){
+      msg = "\nNo se pueden agregar mas playlist.";
+    } else {
+      for (int i = 0; i < MAX_PLAYLISTS && !added; i++){
+        if (playlists[i] == null){
+          playlists[i] = new RestringedPlaylist(playlistTitle, songDuration, genres, adminsRestringed);
+          added = true;
+          msg = "\nLa playlist se agrego exitosamente.";
+        }
+      }
+    }
+    return msg;
+  }
+
+  public String addPlaylist(String playlistTitle, int songDuration, Genre genres){
+    boolean added = false;
+    String msg = "";
+    boolean full = topPlaylist();
+    if (full){
+      msg = "\nNo se pueden agregar mas playlist.";
+    } else {
+      for (int i = 0; i < MAX_PLAYLISTS && !added; i++){
+        if (playlists[i] == null){
+          playlists[i] = new PublicPlaylist(playlistTitle, songDuration, genres);
+          added = true;
+          msg = "\nLa playlist se agrego exitosamente.";
+        }
+      }
+    }
+    return msg;
+  }
+
+  public String showPunctuation(){
+    String msg = "\n**************  Playlists **************\n";
+    boolean publicClassFound = false;
+    for (int i = 0; i < playlists.length; i++){
+      if (playlists[i] instanceof PublicPlaylist){
+        publicClassFound = true;
+      }
+    }
+    if (publicClassFound){
+      for (int i = 0; i < playlists.length; i++){
+        if (playlists[i] instanceof PublicPlaylist){
+          msg += "\n***********************************";
+          msg += "\n**  Title: " + playlists[i].getPlaylistTitle();
+          msg += "\n**  Punctuation: " + playlists[i].convertPunctuation();
+          msg += "\n***********************************\n";
+        }
+      }
+    } else {
+      msg += "\n**  No hay Playlists Publicas.";
+      msg += "\n***********************************";
+    }
+    return msg;
+  }
 }

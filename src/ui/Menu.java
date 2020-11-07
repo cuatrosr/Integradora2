@@ -24,11 +24,23 @@ public class Menu{
 
   private static Scanner sc = new Scanner(System.in);
 
+  /**
+  * Start the program. <br>
+  * <b> pre: </b> Start the program. <br>
+  * <b> post: </b> Start the program.
+  */
   public void startProgram(){
     int choice = 0;
     firstPartProgram(choice, allGenres);
   }
 
+  /**
+  * Do the first part of the program.
+  * <b> pre: </b> The method startProgram is initiated. <br>
+  * <b> post: </b> Make the method that the user chose.
+  * @param choice Read the user choice. 0 < choice < 5.
+  * @param allGenres Get the genres of the Genre class.
+  */
   public void firstPartProgram(int choice, Genre[] allGenres){
     do {
       showFirstUser();
@@ -37,6 +49,14 @@ public class Menu{
     } while (choice != 4);
   }
 
+  /**
+  * Do the second part of the program, after the user log in.
+  * <b> pre: </b> firstPartProgram choice = 2. <br>
+  * <b> post: </b> Make the method that the user chose.
+  * @param choice Read the user choice. 0 < choice < 5.
+  * @param allGenres Get the genres of the Genre class.
+  * @param activeUser set the user that is connected.
+  */
   public void secondPartProgram(int choice, Genre[] allGenres, int activeUser){
     do {
       showSecondUser();
@@ -45,6 +65,12 @@ public class Menu{
     } while (choice != 4);
   }
 
+  /**
+  * Do the admin part of the program.
+  * <b> pre: </b> firstPartProgram choice = 3. <br>
+  * <b> post: </b> Make the method that the admin chose.
+  * @param choice Read the user choice. 0 < choice < 4.
+  */
   public void adminPartProgram(int choice){
     do{
       showAdmin();
@@ -53,14 +79,26 @@ public class Menu{
     } while (choice != 3);
   }
 
+  /**
+  * Do the all the methods related to playlist, after the user log in.
+  * <b> pre: </b> secondPartProgram choice = 3. <br>
+  * <b> post: </b> Make the method that the user chose.
+  * @param choice Read the user choice. 0 < choice < 5.
+  * @param activeUser get the user that is connected.
+  */
   public void playlistProgram(int choice, int activeUser){
     do{
       showPlaylist();
       choice = readOption(sc);
-      doPlaylistOp(choice);
+      doPlaylistOp(choice, activeUser);
     } while(choice != 4);
   }
 
+  /**
+  * Show the first part of the program.
+  * <b> pre: </b> firstPartProgram initiated. <br>
+  * <b> post: </b> show the firstPartProgram Methods.
+  */
   public void showFirstUser(){
     System.out.println("\n(1) Para registrarse en MCS.");
     System.out.println("(2) Para iniciar sesion en MCS.");
@@ -68,6 +106,11 @@ public class Menu{
     System.out.println("(4) Para cerrar el programa.\n");
   }
 
+  /**
+  * Show the second part of the program.
+  * <b> pre: </b> secondPartProgram initiated. <br>
+  * <b> post: </b> show the secondPartProgram Methods.
+  */
   public void showSecondUser(){
     System.out.println("\n(1) Añadir una cancion.");
     System.out.println("(2) Mostrar las canciones agregadas.");
@@ -75,19 +118,36 @@ public class Menu{
     System.out.println("(4) Log out.\n");
   }
 
+  /**
+  * Show the admin part of the program.
+  * <b> pre: </b> adminPartProgram initiated. <br>
+  * <b> post: </b> show the adminPartProgram Methods.
+  */
   public void showAdmin(){
     System.out.println("\n(1) Mostrar todos los usuarios registrados.");
     System.out.println("(2) Mostrar todas las canciones registradas.");
     System.out.println("(3) Salir.\n");
   }
 
+  /**
+  * Show the playlist part of the program.
+  * <b> pre: </b> playlistPartProgram initiated. <br>
+  * <b> post: </b> show the playlistPartProgram Methods.
+  */
   public void showPlaylist(){
     System.out.println("\n(1) Añadir una playlist.");
-    System.out.println("(2) Puntuar una playlist.");
+    System.out.println("(2) Puntua playlist.");
     System.out.println("(3) Ver puntuaciones de una playlist.");
     System.out.println("(4) Salir\n");
   }
 
+  /**
+  * Do the Methods of first part of the program.
+  * <b> pre: </b> firstPartProgram choice = 2. <br>
+  * <b> post: </b> Make the method that the user chose.
+  * @param choice Read the user choice. 0 < choice < 5.
+  * @param allGenres Get the genres of the Genre class.
+  */
   public void doFirstOp(int choice, Genre[] allGenres){
     switch (choice){
       case REGISTER_USER:
@@ -106,6 +166,14 @@ public class Menu{
     }
   }
 
+  /**
+  * Do the Methods of the second part of the program.
+  * <b> pre: </b> secondPartProgram initiated. <br>
+  * <b> post: </b> Make the method that the user chose.
+  * @param choice Read the user choice. 0 < choice < 5.
+  * @param allGenres Get the genres of the Genre class.
+  * @param activeUser set the user that is connected.
+  */
   public void doSecondOp(int choice, Genre[] allGenres, int activeUser){
     switch (choice){
       case ADD_SONG:
@@ -124,6 +192,12 @@ public class Menu{
     }
   }
 
+  /**
+  * Do the Methods of the admin part of the program.
+  * <b> pre: </b> adminPartProgram initiated. <br>
+  * <b> post: </b> Make the method that the user chose.
+  * @param choice Read the user choice. 0 < choice < 4.
+  */
   public void doAdminOp(int choice){
     switch (choice){
       case SHOW_USERS:
@@ -139,13 +213,22 @@ public class Menu{
       }
   }
 
-  public void doPlaylistOp(int choice){
+  /**
+  * Do the Methods of the playlist part of the program.
+  * <b> pre: </b> playlistPartProgram initiated. <br>
+  * <b> post: </b> Make the method that the user chose.
+  * @param choice Read the user choice. 0 < choice < 5.
+  */
+  public void doPlaylistOp(int choice, int activeUser){
     switch (choice){
       case ADD_PLAYLIST:
+        addPlaylist(sc, activeUser);
         break;
       case PLAYLIST_PUNCTUATION:
+        addPunctuationPlaylist(sc);
         break;
       case SHOW_PLAY_PUNCTUATION:
+        System.out.println(app.showPunctuation());
         break;
       case EXIT_PLAYLIST:
         break;
@@ -154,12 +237,68 @@ public class Menu{
     }
   }
 
+  public void addPunctuationPlaylist(Scanner sc){
+    System.out.println("\nPuntua la playlist del 1 al 5.");
+    double prueba1 = sc.nextDouble();
+    try {
+        if (app.punctuationPlaylist(prueba1)){
+        System.out.println("\nSe puntuo correctamente.");
+      } else {
+        System.out.println("\nNo se puntuo correctamente.");
+      }
+    }catch (NullPointerException e) {
+    }
+  }
+
+  /**
+  * add a playlist
+  * <b> pre: </b> doPlaylistOp initiated. <br>
+  * <b> post: </b> added a playlist of 3 different tipes.
+  * @param activeUser get the user that is connected.
+  */
+  public void addPlaylist(Scanner sc, int activeUser){
+    System.out.println("\nIngrese el nombre de su playlist");
+    String playlistTitle = sc.nextLine();
+    System.out.println("\nIngrese el tipo de playlist:");
+    System.out.println("\n(1) Publica. \n(2) Privada. \n(3) Restringida.\n");
+    int choice = sc.nextInt();
+    User[] users = app.getUsers();
+    switch (choice){
+      case 1:
+        System.out.println(app.addPlaylist(playlistTitle));
+        break;
+      case 2:
+        User privateAdmin = users[activeUser];
+        System.out.println(app.addPlaylist(playlistTitle, privateAdmin));
+        break;
+      case 3:
+        User[] adminsRestringed = new User[5];
+        adminsRestringed[0] = users[activeUser];
+        System.out.println(app.addPlaylist(playlistTitle, adminsRestringed));
+        break;
+      default:
+        System.out.println("\nOpcion invalida.");
+    }
+  }
+
+  /**
+  * Read the number by console.
+  * <b> pre: </b> Scanner sc must be initiated <br>
+  * <b> post: </b> Read the number that the user enter by console.
+  * @param sc Read the user choice.
+  */
   public int readOption(Scanner sc){
     int choice = sc.nextInt();
     sc.nextLine();
     return choice;
   }
 
+  /**
+  * Register the info user.
+  * <b> pre: </b> secondPartProgram was initiated and choice = 1 <br>
+  * <b> post: </b> Added user.
+  * @param sc Read the user choice.
+  */
   public void registerInfoUser(Scanner sc){
     System.out.println("\nIngrese su nombre de usuario (Sin espacios):");
     String userName = sc.nextLine();
@@ -175,6 +314,14 @@ public class Menu{
     }
   }
 
+  /**
+  * Login user.
+  * <b> pre: </b> secondPartProgram initiated. <br>
+  * <b> post: </b> Succesfully user loged in.
+  * @param sc Read the user choice.
+  * @param choice Read the user choice. 0 < choice < 5.
+  * @param allGenres Get the genres of the Genre class.
+  */
   public void loginUser(Scanner sc, int choice, Genre[] allGenres){
     System.out.println("\nIngrese su nombre de usuario.");
     String userName = sc.nextLine();
@@ -191,6 +338,14 @@ public class Menu{
     }
   }
 
+  /**
+  * Added song.
+  * <b> pre: </b> secondPartProgram initiated. <br>
+  * <b> post: </b> Succesfully added song.
+  * @param sc Read the user choice.
+  * @param allGenres Get the genres of the Genre class.
+  * @param activeUser set the user that is connected.
+  */
   public void addInfoSong(Scanner sc, Genre[] allGenres, int activeUser){
     System.out.println("\nIngrese el nombre de la cancion:");
     String songTitle = sc.nextLine();
@@ -224,6 +379,11 @@ public class Menu{
     System.out.println(msg);
   }
 
+  /**
+  * Show songs on pool.
+  * <b> pre: </b> User loged in. <br>
+  * <b> post: </b> show the songs on pool.
+  */
   public void showPoolSongs(){
     Song[] pool = app.getPoolSongs();
     if (pool[0] == null) {
@@ -244,6 +404,11 @@ public class Menu{
     }
   }
 
+  /**
+  * Show all the users of the program.
+  * <b> pre: </b> adminPartProgram initiated. <br>
+  * <b> post: </b> show all the users of the program.
+  */
   public void showTotalUsers(){
     User[] users = app.getUsers();
     if (users[0] != null){
@@ -262,6 +427,11 @@ public class Menu{
     }
   }
 
+  /**
+  * Show all the songs of the program.
+  * <b> pre: </b> adminPartProgram initiated. <br>
+  * <b> post: </b> show all the songs of the program.
+  */
   public void showSongs(){
     ArrayList<Song> songs = app.getSongs();
     if (songs.isEmpty()){

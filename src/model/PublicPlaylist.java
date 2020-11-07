@@ -4,23 +4,21 @@ import ui.*;
 
 public class PublicPlaylist extends Playlist{
 
-  private ArrayList<Double> publicPunctuation;
   private int ammountPunctuation = 0;
+  private MCS app = new MCS();
 
-  public PublicPlaylist(String playlistTitle, int songDuration, Genre genres){
-    super(playlistTitle, songDuration, genres);
-    publicPunctuation = new ArrayList<Double>();
-  }
-
-  public ArrayList<Double> getPublicPunctuation(){
-    return publicPunctuation;
+  public PublicPlaylist(String playlistTitle){
+    super(playlistTitle);
   }
 
   @Override
   public double convertPunctuation(){
     double punctuation = 0;
+    double suma = 0;
+    ArrayList<Double> publicPunctuation = app.getPublicPunctuation();
     for (int i = 0; i < publicPunctuation.size(); i++){
-      punctuation += publicPunctuation.get(i);
+      suma = publicPunctuation.get(i);
+      punctuation += suma;
     }
     punctuation = punctuation/publicPunctuation.size();
     return punctuation;

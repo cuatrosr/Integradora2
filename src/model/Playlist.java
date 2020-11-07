@@ -8,10 +8,10 @@ public abstract class Playlist{
   private Genre playlistGenre;
   private ArrayList<Song> playlistSongs;
 
-  public Playlist(String playlistTitle, int songDuration, Genre genres){
+  public Playlist(String playlistTitle){
     this.playlistTitle = playlistTitle;
     playlistDuration = 0;
-    playlistGenre = genres;
+    playlistGenre = Genre.UNKNOWN;
     playlistSongs = new ArrayList<Song>();
   }
 

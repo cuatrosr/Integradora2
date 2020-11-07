@@ -4,8 +4,8 @@ public class PrivatePlaylist extends Playlist{
 
   private User privateAdmin;
 
-  public PrivatePlaylist(String playlistTitle, int songDuration, Genre genres, User privateAdmin){
-    super(playlistTitle, songDuration, genres);
+  public PrivatePlaylist(String playlistTitle, User privateAdmin){
+    super(playlistTitle);
     this.privateAdmin = privateAdmin;
   }
 
@@ -17,6 +17,11 @@ public class PrivatePlaylist extends Playlist{
     this.privateAdmin = privateAdmin;
   }
 
+  /**
+  * Do nothing.
+  * <b> pre: </b> Do nothing. <br>
+  * <b> post: </b> Do nothing.
+  */
   @Override
   public double convertPunctuation(){
     double nada = 0;

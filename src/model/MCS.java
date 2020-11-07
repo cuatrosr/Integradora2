@@ -9,6 +9,7 @@ public class MCS{
   private User[] users = new User[MAX_USERS];
   private Song[] pool = new Song[MAX_SONGS_POOL];
   private Playlist[] playlists = new Playlist[MAX_PLAYLISTS];
+  private ArrayList<Double> publicPunctuation = new ArrayList<Double>();
   private ArrayList<Song> songs = new ArrayList<Song>();
   private int totalUsers = 0;
   private int totalSongsPool = 0;
@@ -130,7 +131,7 @@ public class MCS{
     return full;
   }
 
-  public String addPlaylist(String playlistTitle, int songDuration, Genre genres, User privateAdmin){
+  public String addPlaylist(String playlistTitle, User privateAdmin){
     boolean added = false;
     String msg = "";
     boolean full = topPlaylist();
@@ -139,7 +140,7 @@ public class MCS{
     } else {
       for (int i = 0; i < MAX_PLAYLISTS && !added; i++){
         if (playlists[i] == null){
-          playlists[i] = new PrivatePlaylist(playlistTitle, songDuration, genres, privateAdmin);
+          playlists[i] = new PrivatePlaylist(playlistTitle, privateAdmin);
           added = true;
           msg = "\nLa playlist se agrego exitosamente.";
         }
@@ -148,7 +149,7 @@ public class MCS{
     return msg;
   }
 
-  public String addPlaylist(String playlistTitle, int songDuration, Genre genres, User[] adminsRestringed){
+  public String addPlaylist(String playlistTitle, User[] adminsRestringed){
     boolean added = false;
     String msg = "";
     boolean full = topPlaylist();
@@ -157,7 +158,7 @@ public class MCS{
     } else {
       for (int i = 0; i < MAX_PLAYLISTS && !added; i++){
         if (playlists[i] == null){
-          playlists[i] = new RestringedPlaylist(playlistTitle, songDuration, genres, adminsRestringed);
+          playlists[i] = new RestringedPlaylist(playlistTitle, adminsRestringed);
           added = true;
           msg = "\nLa playlist se agrego exitosamente.";
         }
@@ -166,7 +167,7 @@ public class MCS{
     return msg;
   }
 
-  public String addPlaylist(String playlistTitle, int songDuration, Genre genres){
+  public String addPlaylist(String playlistTitle){
     boolean added = false;
     String msg = "";
     boolean full = topPlaylist();
@@ -175,7 +176,7 @@ public class MCS{
     } else {
       for (int i = 0; i < MAX_PLAYLISTS && !added; i++){
         if (playlists[i] == null){
-          playlists[i] = new PublicPlaylist(playlistTitle, songDuration, genres);
+          playlists[i] = new PublicPlaylist(playlistTitle);
           added = true;
           msg = "\nLa playlist se agrego exitosamente.";
         }
@@ -192,19 +193,34 @@ public class MCS{
         publicClassFound = true;
       }
     }
-    if (publicClassFound){
-      for (int i = 0; i < playlists.length; i++){
-        if (playlists[i] instanceof PublicPlaylist){
-          msg += "\n***********************************";
-          msg += "\n**  Title: " + playlists[i].getPlaylistTitle();
-          msg += "\n**  Punctuation: " + playlists[i].convertPunctuation();
-          msg += "\n***********************************\n";
+    try {
+      if (publicClassFound){
+        for (int i = 0; i < playlists.length; i++){
+          if (playlists[i] instanceof PublicPlaylist){
+            msg += "\n***********************************";
+            msg += "\n**  Title: " + playlists[i].getPlaylistTitle();
+            msg += "\n**  Punctuation: " + playlists[i].convertPunctuation();
+            msg += "\n***********************************\n";
+          }
         }
+      } else {
+        msg += "\n**  No hay Playlists Publicas.";
+        msg += "\n***********************************";
       }
-    } else {
-      msg += "\n**  No hay Playlists Publicas.";
-      msg += "\n***********************************";
+    } catch (NullPointerException e) {
     }
     return msg;
+  }
+
+  public boolean punctuationPlaylist(double prueba1){
+    boolean punctuation = false;
+    if (publicPunctuation.add(prueba1)) {
+      punctuation = true;
+    }
+    return punctuation;
+  }
+
+  public ArrayList<Double> getPublicPunctuation(){
+    return publicPunctuation;
   }
 }
